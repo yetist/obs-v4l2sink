@@ -131,7 +131,7 @@ static void output_stopped(void *data, calldata_t *cd)
 	signal_handler_disconnect(handler, "v4l2close", output_stopped , page);
 }
 
-
-
-
+/*
+ * vi: set ts=8 sts=8 sw=8 noet:
+ */
 

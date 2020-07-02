@@ -376,3 +376,7 @@ signal_handler_t* v4l2sink_get_signal_handler()
 {
 	return obs_output_get_signal_handler(v4l2_out);	
 }
+
+/*
+ * vi: set ts=8 sts=8 sw=8 noet:
+ */
