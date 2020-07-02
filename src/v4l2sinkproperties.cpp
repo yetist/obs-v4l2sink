@@ -37,7 +37,7 @@ V4l2sinkProperties::V4l2sinkProperties(QWidget *parent) :
 
 	ui->checkBox_auto->setChecked(autostart);
 	ui->lineEdit_dev->setText(device);
-	
+
 	ui->comboBox_format->addItem(V4L2SINK_YUV420, V4L2SINK_YUV420);
 	ui->comboBox_format->addItem(V4L2SINK_NV12, V4L2SINK_NV12);
 	ui->comboBox_format->addItem(V4L2SINK_YUY2, V4L2SINK_YUY2);
@@ -63,7 +63,7 @@ V4l2sinkProperties::~V4l2sinkProperties()
 
 void V4l2sinkProperties::closeEvent(QCloseEvent *event)
 {
-	saveSettings();	
+	saveSettings();
 }
 
 void V4l2sinkProperties::saveSettings()
@@ -75,9 +75,9 @@ void V4l2sinkProperties::saveSettings()
 	config_t* config = obs_frontend_get_global_config();
 	if(config){
 		config_set_bool(config, "V4l2sink", "AutoStart", autostart);
-		config_set_string(config, "V4l2sink", "DevicePath", 
+		config_set_string(config, "V4l2sink", "DevicePath",
 			ba_dev_name.constData());
-		config_set_string(config, "V4l2sink", "Format", 
+		config_set_string(config, "V4l2sink", "Format",
 			ba_format.constData());
 	}
 
@@ -125,7 +125,7 @@ static void output_stopped(void *data, calldata_t *cd)
 
 	if (opening)
 		page->setWarningText(msg);
-		
+
 	signal_handler_t *handler = obs_output_get_signal_handler(output);
 	page->enableStart(true);
 	signal_handler_disconnect(handler, "v4l2close", output_stopped , page);
