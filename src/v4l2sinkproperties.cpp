@@ -60,10 +60,13 @@ V4l2sinkProperties::V4l2sinkProperties(QWidget *parent) :
 		ui->comboBox_format->findText(format));
 
 	ui->label_warning->setStyleSheet("QLabel { color : red; }");
-	enableStart(true);
-
-	if(autostart)
-		onStart();
+	if (devices.count() > 0) {
+		enableStart(true);
+		if(autostart)
+			onStart();
+	} else {
+		setWarningText("Please load v4l2loopback kernel module first.");
+	}
 
 }
 
