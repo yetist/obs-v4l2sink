@@ -19,5 +19,6 @@
 void v4l2sink_enable(const char *dev_name, const char *format);
 void v4l2sink_disable();
 void v4l2sink_release();
+bool load_kernel_module(void);
 signal_handler_t* v4l2sink_get_signal_handler();
 #endif // V4L2SINK_H

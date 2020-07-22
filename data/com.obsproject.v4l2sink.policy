@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
+<policyconfig>
+
+  <vendor>obs v4l2sink</vendor>
+	<vendor_url>https://github.com/CatxFish/obs-v4l2sink.git</vendor_url>
+
+   <action id="com.obsproject.v4l2sink.LoadModule">
+    <description>Load v4l2loopback module</description>
+    <message>Load v4l2loopback module</message>
+    <defaults>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+  </action>
+   <action id="com.obsproject.v4l2sink.ModuleInKernel">
+    <description>is v4l2loopback module loaded</description>
+    <message>is v4l2loopback module loaded</message>
+    <defaults>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+  </action>
+</policyconfig>

@@ -3,6 +3,7 @@ project(obs-v4l2sink)
 
 
 include(external/FindLibObs.cmake)
+include(cmake/GDbusConfig.cmake)
 find_package(LibObs REQUIRED)
 
 set (CMAKE_CXX_STANDARD 11)
@@ -13,6 +14,7 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5DBus REQUIRED)
 
 
 set(virtualoutput_SOURCES
@@ -33,7 +35,8 @@ add_library(v4l2sink MODULE
 target_link_libraries(v4l2sink
 	libobs
 	Qt5::Core
-	Qt5::Widgets)
+	Qt5::Widgets
+	Qt5::DBus)
 
 if(ARCH EQUAL 64)
 	set(ARCH_NAME "x86_64")
@@ -49,3 +52,5 @@ install(TARGETS v4l2sink
 install(DIRECTORY locale/
 	DESTINATION "${CMAKE_INSTALL_PREFIX}/share/obs/obs-plugins/v4l2sink/locale")
 
+add_subdirectory(daemon)
+add_subdirectory(data)

@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=com.obsproject.v4l2sink
+Exec=/usr/lib/obs-v4l2sink/v4l2sink-daemon
+User=root

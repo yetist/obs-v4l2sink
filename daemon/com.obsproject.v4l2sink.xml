@@ -1,0 +1,8 @@
+<node>
+	<interface name="com.obsproject.v4l2sink">
+    <method name="LoadModule">
+			<arg name="result" type="b" direction="out"/>
+    </method>
+		<property name="ModuleInKernel" type="b" access="read"/>
+  </interface>
+</node>

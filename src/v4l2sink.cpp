@@ -18,6 +18,7 @@
 #include <obs-module.h>
 #include <QMainWindow>
 #include <QAction>
+#include <QtDBus>
 #include <linux/videodev2.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
@@ -320,6 +321,29 @@ struct obs_output_info create_output_info()
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("v4l2sink", "en-US")
 
+bool load_kernel_module(void)
+{
+	if (!QDBusConnection::systemBus().isConnected()) {
+		return false;
+	}
+	QDBusInterface iface("com.obsproject.v4l2sink", "/com/obsproject/v4l2sink", "org.freedesktop.DBus.Properties", QDBusConnection::systemBus());
+	if (!iface.isValid()) {
+		return false;
+	}
+
+	QDBusReply<bool> reply = iface.call("Get", "com.obsproject.v4l2sink", "ModuleInKernel");
+	if (reply.value()) {
+		return true;
+	}
+
+	QDBusInterface iface2("com.obsproject.v4l2sink", "/com/obsproject/v4l2sink", "com.obsproject.v4l2sink", QDBusConnection::systemBus());
+	if (!iface2.isValid()) {
+		return false;
+	}
+	reply = iface2.call("LoadModule");
+	return reply.value();
+}
+
 bool obs_module_load(void)
 {
 	obs_output_info v4l2sink_info = create_output_info();
@@ -328,6 +352,8 @@ bool obs_module_load(void)
 	v4l2_out = obs_output_create("v4l2sink", "V4l2sink",settings, NULL);
 	obs_data_release(settings);
 	v4l2sink_signal_init("void v4l2close(string msg, bool opening)");
+
+	load_kernel_module();
 
 	QMainWindow* main_window = (QMainWindow*)obs_frontend_get_main_window();
 	QAction *action = (QAction*)obs_frontend_add_tools_menu_qaction(
@@ -364,7 +390,7 @@ void v4l2sink_enable(const char *dev_name, const char *format)
 	obs_data_set_string(settings, "format", format);
 	obs_output_update(v4l2_out,settings);
 	obs_data_release(settings);
-	obs_output_start(v4l2_out);	
+	obs_output_start(v4l2_out);
 }
 
 void v4l2sink_disable()
